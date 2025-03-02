@@ -1,8 +1,12 @@
 FROM hashicorp/consul:latest
 
-COPY ./config/.consul.hcl /consul/config/consul.hcl
+USER consul
 
-# Expose necessary ports in inside network
+COPY --chown=consul:consul ./config/consul.hcl /consul/config/consul.hcl
+
+WORKDIR /consul
+
 EXPOSE 8500 8600 8600/udp
 
+ENTRYPOINT ["consul"]
 CMD ["agent", "-config-dir=/consul/config"]
