@@ -1,4 +1,4 @@
-node_name = "movie-mate-consul-node"
+node_name = "movie-mate-node"
 server = true
 bootstrap_expect = 1
 ui = true
