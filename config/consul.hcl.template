@@ -1,12 +1,13 @@
 datacenter = "${CONSUL_DATACENTER}"
-bind_addr  = "${CONSUL_BIND_ADDR}"
+bind_addr  = "0.0.0.0"
 node_name  = "${CONSUL_NODE_NAME}"
-
+server = true
+ui = true
+bootstrap_expect = 1
 ui_config {
-  enabled = ${CONSUL_UI_IS_ENABLED}
+  enabled = true
   content_path = "${CONSUL_CONTENT_PATH}"
 }
 
 client_addr = "0.0.0.0"
 data_dir = "/consul/data"
-

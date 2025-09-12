@@ -13,8 +13,9 @@ RUN mkdir -p /config && chown -R consul:consul /config
 COPY config/consul.hcl.template /config/consul.hcl.template
 COPY entrypoint.sh /entrypoint.sh
 
-# Make script executable and own it
-RUN chmod +x /entrypoint.sh && chown consul:consul /entrypoint.sh
+# Set permissions
+RUN chmod +x /entrypoint.sh \
+ && chown -R consul:consul /config
 
 # Expose ports
 EXPOSE 8500 8600 8600/udp
