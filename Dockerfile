@@ -1,12 +1,26 @@
-FROM hashicorp/consul:latest
+FROM hashicorp/consul:1.18
 
-USER consul
+# Switch to root to install packages
+USER root
 
-COPY --chown=consul:consul ./config/consul.hcl /consul/config/consul.hcl
+# Install envsubst (from gettext)
+RUN apk add --no-cache gettext
 
-WORKDIR /consul
+# Create config directory with right permissions
+RUN mkdir -p /config && chown -R consul:consul /config
 
+# Copy files
+COPY config/consul.hcl.template /config/consul.hcl.template
+COPY entrypoint.sh /entrypoint.sh
+
+# Make script executable and own it
+RUN chmod +x /entrypoint.sh && chown consul:consul /entrypoint.sh
+
+# Expose ports
 EXPOSE 8500 8600 8600/udp
 
-ENTRYPOINT ["consul"]
-CMD ["agent", "-config-dir=/consul/config"]
+# Drop back to non-root user
+USER consul
+
+# Run entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
