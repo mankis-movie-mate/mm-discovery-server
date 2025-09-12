@@ -1,7 +1,9 @@
-datacenter = "${CONSUL_DATACENTER}"
-bind_addr  = "${CONSUL_BIND_ADDR}"
-node_name  = "${CONSUL_NODE_NAME}"
-
+datacenter = "${CONSUL_DATACENTER:dc1}"
+bind_addr  = "${CONSUL_BIND_ADDR:0.0.0.0}"
+node_name  = "${CONSUL_NODE_NAME:movie-mate-node}"
+server = true
+ui = true
+bootstrap_expect = 1
 ui_config {
   enabled = true
   content_path = "${CONSUL_CONTENT_PATH}"
